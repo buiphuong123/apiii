@@ -9,18 +9,20 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-const routes = require('./src/routes/user.routes');
 
-app.use('/', routes);
 
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_URI, { useNewURLParser: true, useUnifiedTopology: true });
-
+mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true,useNewURLParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function(){
   console.log('Connected')
 });
+
+const routes = require('./src/routes/user.routes');
+
+app.use('/', routes);
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
